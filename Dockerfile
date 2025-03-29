@@ -23,8 +23,11 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Instalar Composer
 WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    composer install --no-interaction || true
+    mv composer.phar /usr/local/bin/composer
+
+# Instalar dependencias ignorando errores menores por incompatibilidades de plataforma
+RUN composer install --no-interaction --no-dev --optimize-autoloader || true
 
 EXPOSE 80
 CMD ["apache2-foreground"]
+
