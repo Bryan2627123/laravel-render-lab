@@ -1,25 +1,24 @@
-FROM php:8.2-apache
+FROM php:8.1-apache
 
-# Instala dependencias
+# Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
-    libzip-dev unzip git curl \
+    zip unzip git curl libzip-dev \
     && docker-php-ext-install zip pdo pdo_mysql
 
-# Habilita mod_rewrite
-RUN a2enmod rewrite
+# Copiar el contenido del proyecto a /var/www/html
+COPY . /var/www/html
 
-# Copia el código de la app al contenedor
-COPY . /var/www/html/
+# Cambiar el DocumentRoot a la carpeta public/
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
-# Establece permisos
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+# Establecer permisos
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Instala Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Instalar Composer
+WORKDIR /var/www/html
+RUN curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer && \
+    composer install --no-interaction
 
-# Corre Composer para instalar dependencias
-RUN composer install --no-interaction --no-dev --optimize-autoloader
-
-# Expone el puerto 80
 EXPOSE 80
+CMD ["apache2-foreground"]
