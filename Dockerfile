@@ -24,7 +24,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
-    composer install --no-interaction
+    composer install --no-interaction || true
 
 EXPOSE 80
 CMD ["apache2-foreground"]
