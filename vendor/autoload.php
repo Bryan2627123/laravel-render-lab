@@ -1,0 +1,1 @@
+<?php // Simulación de autoload ?>

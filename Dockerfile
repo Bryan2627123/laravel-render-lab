@@ -14,20 +14,14 @@ COPY . /var/www/html
 # Cambiar el DocumentRoot a la carpeta public/
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
-# Crear carpetas necesarias para Laravel
+# Crear carpetas necesarias
 RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Establecer permisos necesarios
+# Establecer permisos
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Instalar Composer
-WORKDIR /var/www/html
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer
-
-# Instalar dependencias ignorando errores menores por incompatibilidades de plataforma
-RUN composer install --no-interaction --no-dev --optimize-autoloader || true
+# NO instales Composer, ya está todo preparado
+# WORKDIR /var/www/html
 
 EXPOSE 80
 CMD ["apache2-foreground"]
-
