@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 services:
   - type: web
     name: laravel-render-lab
@@ -6,3 +7,16 @@ services:
     region: oregon
     branch: main
     rootDir: .
+=======
+
+services:
+  - type: web
+    name: laravel-render-lab
+    env: docker
+    plan: free
+    region: oregon
+    branch: main
+    rootDir: .
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+>>>>>>> 30cb019 (archivos faltantes)
