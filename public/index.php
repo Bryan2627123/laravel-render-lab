@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 define('LARAVEL_START', microtime(true));
@@ -14,6 +13,3 @@ $response = $kernel->handle(
 )->send();
 
 $kernel->terminate($request, $response);
-=======
-// Archivo simulado: public/index.php
->>>>>>> 30cb019 (archivos faltantes)
