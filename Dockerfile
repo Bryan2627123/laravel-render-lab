@@ -14,6 +14,9 @@ COPY . /var/www/html
 # Cambiar el DocumentRoot a la carpeta public/
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
+# Crear carpetas necesarias para Laravel
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache
+
 # Establecer permisos necesarios
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -25,3 +28,4 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 
 EXPOSE 80
 CMD ["apache2-foreground"]
+
