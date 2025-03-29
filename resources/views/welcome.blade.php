@@ -1,1 +1,1 @@
-// Archivo simulado: resources/views/welcome.blade.php
+<h1>Bienvenido a Laravel en Render</h1>
