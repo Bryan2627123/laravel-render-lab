@@ -1,1 +1,0 @@
-<h1>Bienvenido a Laravel en Render</h1>
